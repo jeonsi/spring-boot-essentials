@@ -42,8 +42,8 @@ public class PersonController {
 	}
 
 	@PostMapping
-	public UUID createPerson(@NotNull @Valid @RequestBody Person person) {
-		return personService.createPerson(person);
+	public UUID addPerson(@NotNull @Valid @RequestBody Person person) {
+		return personService.addPerson(person);
 	}
 
 	@DeleteMapping(path = "{id}")

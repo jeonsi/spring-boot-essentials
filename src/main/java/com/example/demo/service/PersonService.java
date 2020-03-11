@@ -17,7 +17,7 @@ public class PersonService {
 	private final PersonDao personDao;
 
 	@Autowired	// Dependency Injection, @Qualifier specifies "fakeDao" bean
-	public PersonService(@Qualifier("fakeDao") PersonDao personDao) {
+	public PersonService(@Qualifier("postgres") PersonDao personDao) {
 		this.personDao = personDao;
 	}
 
@@ -25,7 +25,7 @@ public class PersonService {
 		return personDao.selectAllPersons();
 	}
 
-	public UUID createPerson(Person person) {
+	public UUID addPerson(Person person) {
 		return personDao.insertPerson(person);
 	}
 
