@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Person {
 
 	private final UUID id;
-	@NotBlank
+	@NotBlank	// "" should be avoided, @NotNull is not enough
 	private final String name;
 
 	@NotNull
