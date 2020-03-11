@@ -9,24 +9,24 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.Person;
 
-@Repository("fakeDao")
+@Repository("fakeDao")	// same as @Component, "fakeDao" is the name of this instance
 public class FakePersonDataAccessService implements PersonDao {
 
 	private static final List<Person> DB = new ArrayList<>();
 
 	@Override
-	public List<Person> getPeople() {
+	public List<Person> selectAllPersons() {
 		return DB;
 	}
 
 	@Override
-	public UUID addPerson(UUID id, Person person) {
+	public UUID insertPerson(UUID id, Person person) {
 		DB.add(new Person(id, person.getName(), person.getAge()));
 		return id;
 	}
 
 	@Override
-	public Optional<Person> getPerson(UUID id) {
+	public Optional<Person> selectPerson(UUID id) {
 		return DB
 			.stream()
 			.filter(person -> person.getId().equals(id))
@@ -35,7 +35,7 @@ public class FakePersonDataAccessService implements PersonDao {
 
 	@Override
 	public int deletePerson(UUID id) {
-		Optional<Person> personOptional = getPerson(id);
+		Optional<Person> personOptional = selectPerson(id);
 		if (!personOptional.isPresent()) {
 			return 0;
 		}
@@ -45,11 +45,11 @@ public class FakePersonDataAccessService implements PersonDao {
 
 	@Override
 	public int updatePerson(UUID id, Person personUpdate) {
-		return getPerson(id)
+		return selectPerson(id)
 			.map(person -> {
-				int indexOfPersonToDelete = DB.indexOf(person);
-				if (indexOfPersonToDelete >= 0) {
-					DB.set(indexOfPersonToDelete, new Person(id, personUpdate.getName(), personUpdate.getAge()));
+				int indexOfPersonToUpdate = DB.indexOf(person);
+				if (indexOfPersonToUpdate >= 0) {
+					DB.set(indexOfPersonToUpdate, new Person(id, personUpdate.getName(), personUpdate.getAge()));
 					return 1;
 				}
 				return 0;

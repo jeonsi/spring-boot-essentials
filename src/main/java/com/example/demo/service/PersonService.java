@@ -11,26 +11,26 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dao.PersonDao;
 import com.example.demo.model.Person;
 
-@Service
+@Service	// same as @Component
 public class PersonService {
 
 	private final PersonDao personDao;
 
-	@Autowired
+	@Autowired	// Dependency Injection, @Qualifier specifies "fakeDao" bean
 	public PersonService(@Qualifier("fakeDao") PersonDao personDao) {
 		this.personDao = personDao;
 	}
 
-	public List<Person> getAllPeople() {
-		return personDao.getPeople();
+	public List<Person> getAllPersons() {
+		return personDao.selectAllPersons();
 	}
 
-	public UUID insertNewPerson(Person person) {
-		return personDao.addPerson(person);
+	public UUID createPerson(Person person) {
+		return personDao.insertPerson(person);
 	}
 
-	public Optional<Person> getPersonById(UUID personId) {
-		return personDao.getPerson(personId);
+	public Optional<Person> getPerson(UUID personId) {
+		return personDao.selectPerson(personId);
 	}
 
 	public void deletePerson(UUID personId) {

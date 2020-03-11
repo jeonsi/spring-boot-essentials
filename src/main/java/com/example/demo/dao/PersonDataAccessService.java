@@ -9,17 +9,17 @@ import com.example.demo.model.Person;
 public class PersonDataAccessService implements PersonDao {
 
 	@Override
-	public UUID addPerson(UUID id, Person person) {
+	public UUID insertPerson(UUID id, Person person) {
 		return null;
 	}
 
 	@Override
-	public List<Person> getPeople() {
+	public List<Person> selectAllPersons() {
 		return null;
 	}
 
 	@Override
-	public Optional<Person> getPerson(UUID id) {
+	public Optional<Person> selectPerson(UUID id) {
 		return Optional.empty();
 	}
 

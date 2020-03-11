@@ -8,16 +8,16 @@ import com.example.demo.model.Person;
 
 public interface PersonDao {
 
-	UUID addPerson(UUID id, Person person);
+	UUID insertPerson(UUID id, Person person);
 
-	default UUID addPerson(Person person) {
+	default UUID insertPerson(Person person) {
 		UUID id = UUID.randomUUID();
-		return addPerson(id, person);
+		return insertPerson(id, person);
 	}
 
-	List<Person> getPeople();
+	List<Person> selectAllPersons();
 
-	Optional<Person> getPerson(UUID id);
+	Optional<Person> selectPerson(UUID id);
 
 	int deletePerson(UUID id);
 

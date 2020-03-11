@@ -31,21 +31,21 @@ public class FakePersonDataAccessServiceTest {
 		Person personTwo = new Person(idTwo, "Anna Smith", 40);
 
 		// When James and Anna added to db
-		underTest.addPerson(idOne, personOne);
-		underTest.addPerson(idTwo, personTwo);
+		underTest.insertPerson(idOne, personOne);
+		underTest.insertPerson(idTwo, personTwo);
 
 		// Then can retrieve James by id
-		assertThat(underTest.getPerson(idOne))
+		assertThat(underTest.selectPerson(idOne))
 			.isPresent()
 			.hasValueSatisfying(personFromDb -> assertThat(personFromDb).isEqualToComparingFieldByField(personOne));
 
 		// ...And also Anna by id
-		assertThat(underTest.getPerson(idTwo))
+		assertThat(underTest.selectPerson(idTwo))
 			.isPresent()
 			.hasValueSatisfying(personFromDb -> assertThat(personFromDb).isEqualToComparingFieldByField(personTwo));
 
 		// When get all people
-		List<Person> people = underTest.getPeople();
+		List<Person> people = underTest.selectAllPersons();
 
 		// ...List should have size 2 and should have both James and Anna
 		assertThat(people)
@@ -60,7 +60,7 @@ public class FakePersonDataAccessServiceTest {
 		assertThat(underTest.updatePerson(idOne, personUpdate)).isEqualTo(1);
 
 		// Then when get person with idOne then should have name as James Bond > Jake Black
-		assertThat(underTest.getPerson(idOne))
+		assertThat(underTest.selectPerson(idOne))
 			.isPresent()
 			.hasValueSatisfying(personFromDb -> assertThat(personFromDb).isEqualToComparingFieldByField(personUpdate));
 
@@ -68,10 +68,10 @@ public class FakePersonDataAccessServiceTest {
 		assertThat(underTest.deletePerson(idOne)).isEqualTo(1);
 
 		// When get personOne should be empty
-		assertThat(underTest.getPerson(idOne)).isEmpty();
+		assertThat(underTest.selectPerson(idOne)).isEmpty();
 
 		// Finally DB should only contain only Anna Smith
-		assertThat(underTest.getPeople())
+		assertThat(underTest.selectAllPersons())
 			.hasSize(1)
 			.usingFieldByFieldElementComparator()
 			.containsExactlyInAnyOrder(personTwo);

@@ -25,25 +25,25 @@ public class PersonController {
 
 	private final PersonService personService;
 
-	@Autowired
+	@Autowired	// Dependency Injection
 	public PersonController(PersonService personService) {
 		this.personService = personService;
 	}
 
 	@GetMapping
-	public List<Person> getAll() {
-		return personService.getAllPeople();
+	public List<Person> getAllPersons() {
+		return personService.getAllPersons();
 	}
 
 	@GetMapping(path = "{id}")
 	public Person getPerson(@NotNull @PathVariable("id") UUID id) {
-		return personService.getPersonById(id)
+		return personService.getPerson(id)
 			.orElse(null);
 	}
 
 	@PostMapping
-	public UUID createNewPerson(@NotNull @Valid @RequestBody Person person) {
-		return personService.insertNewPerson(person);
+	public UUID createPerson(@NotNull @Valid @RequestBody Person person) {
+		return personService.createPerson(person);
 	}
 
 	@DeleteMapping(path = "{id}")
@@ -52,7 +52,7 @@ public class PersonController {
 	}
 
 	@PutMapping(path = "{id}")
-	public void deletePerson(@NotNull @PathVariable("id") UUID id, @NotNull @Valid @RequestBody Person person) {
+	public void updatePerson(@NotNull @PathVariable("id") UUID id, @NotNull @Valid @RequestBody Person person) {
 		personService.updatePerson(id, person);
 	}
 }
